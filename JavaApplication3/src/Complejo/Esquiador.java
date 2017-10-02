@@ -5,6 +5,9 @@
  */
 package Complejo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yoni
@@ -13,32 +16,38 @@ public class Esquiador extends Thread {
 
     private String nombre; //Nombre del Esquiador
     private CaidaRapida complejo; //Monitor del complejo
+    private Confiteria conf;
     private int tipoDeMedio;
     private int menu;
 
-    public Esquiador(String nombre, CaidaRapida complejo, int tipoDeMedio) {
+    public Esquiador(String nombre, CaidaRapida complejo, int tipoDeMedio, Confiteria conf) {
         this.nombre = nombre;
         this.complejo = complejo;
         this.tipoDeMedio = tipoDeMedio;
-        this.menu=0;
+        this.conf = conf;
+        this.menu = 0;
     }
 
     public void setTipoDeMedio(int tipoDeMedio) {
         this.tipoDeMedio = tipoDeMedio;
     }
-    
-    public void setMenu(int tipoMenu){
-        this.menu=tipoMenu;
+
+    public void setMenu(int tipoMenu) {
+        this.menu = tipoMenu;
     }
 
     public int getTipoDeMedio() {
         return tipoDeMedio;
     }
-    
+
     public int getMenu() {
         return menu;
     }
-    
+
+    public String getNombre() {
+        return nombre;
+    }
+
     private void cambiaMedioRandom() {
         this.tipoDeMedio = (int) (Math.random() * 4) + 1; //Genera un random entre 1 y 4 para ir cambiando el medio
     }
@@ -59,13 +68,20 @@ public class Esquiador extends Thread {
     public void run() {
         try {
             while (true) {
-                complejo.usarMedio(tipoDeMedio);
+                /*complejo.usarMedio(tipoDeMedio);
+            this.esperar(5); //Simula un tiempo entre salir del puente y volver a entrar
+            this.cambiaMedioRandom();*/
+                System.out.println(this.getNombre()+" empieza.");
+                if (conf.comprarMenu(this)) {
+                    this.esperar(5);
+                    conf.saleConfiteria(this);
+                }
+                System.out.println(this.getNombre()+ " se va de confitería, espera un toque y vuelve a comenzar.");
+                this.esperar(5);
 
             }
-            this.esperar(50); //Simula un tiempo entre salir del puente y volver a entrar
-            this.cambiaMedioRandom();
         } catch (InterruptedException ex) {
-            System.out.println("ERROR SEVERO en Auto " + nombre);
+            Logger.getLogger(Esquiador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
