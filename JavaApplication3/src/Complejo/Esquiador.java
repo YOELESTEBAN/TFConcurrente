@@ -5,8 +5,6 @@
  */
 package Complejo;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -15,17 +13,17 @@ import java.util.logging.Logger;
 public class Esquiador extends Thread {
 
     private String nombre; //Nombre del Esquiador
-    private CaidaRapida complejo; //Monitor del complejo
     private Confiteria conf;
     private int tipoDeMedio;
     private int menu;
+    private boolean postre;
 
-    public Esquiador(String nombre, CaidaRapida complejo, int tipoDeMedio, Confiteria conf) {
+    public Esquiador(String nombre, int tipoDeMedio, Confiteria conf) {
         this.nombre = nombre;
-        this.complejo = complejo;
         this.tipoDeMedio = tipoDeMedio;
         this.conf = conf;
         this.menu = 0;
+        this.postre=false;
     }
 
     public void setTipoDeMedio(int tipoDeMedio) {
@@ -68,11 +66,17 @@ public class Esquiador extends Thread {
     public void run() {
         try {
             while (true) {
+                System.out.println(this.getNombre()+" empieza.");
                 /*complejo.usarMedio(tipoDeMedio);
             this.esperar(5); //Simula un tiempo entre salir del puente y volver a entrar
             this.cambiaMedioRandom();*/
-                System.out.println(this.getNombre()+" empieza.");
+                
                 if (conf.comprarMenu(this)) {
+                    conf.retiraMenu(this);
+                    if (this.getPostre()){
+                        conf.retiraPostre(this);
+                    }
+                    System.out.println(this.getNombre()+ " come.");
                     this.esperar(5);
                     conf.saleConfiteria(this);
                 }
@@ -81,9 +85,17 @@ public class Esquiador extends Thread {
 
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(Esquiador.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error en runEsquiador.");
         }
 
+    }
+
+    public void setPostre(boolean i) {
+        this.postre=i;
+    }
+    
+    public boolean getPostre (){
+        return this.postre;
     }
 
 }

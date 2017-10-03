@@ -5,6 +5,9 @@
  */
 package Complejo;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author Yoni
@@ -12,20 +15,25 @@ package Complejo;
 public class Test {
     
     public static void main(String[] args) throws InterruptedException {
-        CaidaRapida complejo= new CaidaRapida ();
+       
         Confiteria conf= new Confiteria();
-        Esquiador e1= new Esquiador ("e1", complejo,1,conf);
-        Esquiador e2= new Esquiador ("e2", complejo,1,conf);
-        Esquiador e3= new Esquiador ("e3", complejo,1,conf);
-        Esquiador e4= new Esquiador ("e4", complejo,1,conf);
-        e1.start();
-        Thread.sleep(300);
-        e2.start();
-        Thread.sleep(500);
-        e3.start();
-        Thread.sleep(200);
-        e4.start();
+        ArrayList esqVector= new ArrayList (10);
+        Random r= new Random ();
+        
+        int aux;
+        for (aux=0; aux<5; aux++){
+            String nombre="E"+aux;
+            esqVector.add(new Esquiador (nombre, 1,conf));
+        }
+        for (aux=0; aux<5; aux++){
+            ((Esquiador)esqVector.get(aux)).start();
+            Thread.sleep(r.nextInt(1000));
+        }
         
     }
     
 }
+/*for (int i=0; i<20;i++){
+            System.out.println (r.nextInt(6)+1 );
+            System.out.println (r.nextBoolean());
+        }*/

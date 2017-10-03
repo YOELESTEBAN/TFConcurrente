@@ -14,18 +14,16 @@ import java.util.ArrayList;
  */
 public class Medio {
     
-    private ArrayList molinetes; //Vector que contiene los molinetes de este medio
+    private ArrayList molinetes; //Arreglo que contiene los molinetes de este medio
     private int tipo; //Tipo de medio (entre 1 y 4)
     private boolean disponible; //Cuando disponible=true entonces pueden subir 
 
     public Medio(int tipo) {
         
         if (tipo>0 && tipo<5){ //Verifica que la cantidad de molinetes del medio sea correcta
-            int aux=0; //Entero auxiliar utilizado para el ID del molinete a crear
             molinetes= new ArrayList (tipo); //Se declara el vector que contiene los molinetes de este medio
-            while (aux<tipo){
-                insertarMolinete(aux); //Crea los molinetes y los va insertando en el vector
-                aux++;
+            for (int i=0;i<tipo;i++){
+                insertarMolinete(i); //Crea los molinetes y los va insertando en el array
             }
         this.tipo = tipo; //Tipo de medio (de 1 a 4) OJOOOOOOOOOOO (verificar que no se haya creado ya, si o si 4 medios tiene q haber)
         }

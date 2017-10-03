@@ -9,10 +9,13 @@ package Complejo;
  *
  * @author Yoni
  */
-public class Instructor {
-    private int id;
+public class GestionaInst { //Monitor de instructores
+    //Instructores hilos
     
     
+    public synchronized void tomarClase (int tipo){
+        
+    }
     
     
 }

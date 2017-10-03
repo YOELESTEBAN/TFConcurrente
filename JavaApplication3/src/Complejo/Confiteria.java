@@ -5,6 +5,7 @@
  */
 package Complejo;
 
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,22 +20,27 @@ public class Confiteria {
     private boolean mostrador1;
     private boolean mostrador2;
     private boolean mostradorPostre;
-    private boolean caja;
     private Semaphore sCaja;
     private Semaphore sCantPersonas;
+    private Semaphore sMostrador1;
+    private Semaphore sMostrador2;
+    private Semaphore sPostre;
 
     public Confiteria() {
-        this.cantPersonas = 98;
+        this.cantPersonas = 0;
         this.mostrador1 = true; //al ocuparse pasan a false
         this.mostrador2 = true;
         this.mostradorPostre = true;
-        this.caja = true;
         sCaja = new Semaphore(1);
         sCantPersonas = new Semaphore(1);
+        sMostrador1 = new Semaphore(1);
+        sMostrador2 = new Semaphore(1);
+        sPostre = new Semaphore(1);
     }
 
     public boolean comprarMenu(Esquiador esq) {
         boolean aux = false;
+        Random r= new Random ();
 
         try {
             System.out.println(esq.getNombre() + " llega a la caja y pide el semáforo.");
@@ -42,11 +48,14 @@ public class Confiteria {
             System.out.println(esq.getNombre() + " obtiene el semáforo.");
             if (cantPersonas < 100) {
                 System.out.println(esq.getNombre() + " hay menos de 100 personas.");
+                sCantPersonas.acquire();
                 cantPersonas++;
-                System.out.println(esq.getNombre() + " suma persona a la confitería y quedan " + cantPersonas);
+                System.out.println(esq.getNombre() + " suma persona a la confitería y hay " + cantPersonas);
+                sCantPersonas.release();
                 esq.esperar(3);//Simula el tiempo que demora en comprar el menu
-                esq.setMenu((int) (Math.random() * 2) + 1);
-                System.out.println(esq.getNombre() + " compra el menu " + esq.getMenu() + ".");
+                esq.setMenu(r.nextInt(2) + 1);
+                esq.setPostre(r.nextBoolean());
+                System.out.println(esq.getNombre() + " compra el menu " + esq.getMenu() + " y postre en " +esq.getPostre()+".");
                 System.out.println(esq.getNombre() + " libera la caja (semaforo) y sale.");
                 aux = true;
             } else {
@@ -63,6 +72,40 @@ public class Confiteria {
 
     }
 
+    public void retiraMenu(Esquiador esq) {
+        try {
+            if (esq.getMenu() == 1) {
+                System.out.println(esq.getNombre() + " va a retirar el menu 1 y solicita el semaforo.");
+                sMostrador1.acquire();
+                System.out.println(esq.getNombre() + " obtiene el semaforo de mostrador 1 y retira el menu.");
+                esq.esperar(1);//Simula el tiempo que demora en retirar el menu
+                System.out.println(esq.getNombre() + " libera el semaforo de mostrador 1 y se va.");
+                sMostrador1.release();
+            } else {
+                System.out.println(esq.getNombre() + " va a retirar el menu 2 y solicita el semaforo.");
+                sMostrador2.acquire();
+                System.out.println(esq.getNombre() + " obtiene el semaforo de mostrador 2 y retira el menu.");
+                esq.esperar(1);//Simula el tiempo que demora en retirar el menu
+                System.out.println(esq.getNombre() + " libera el semaforo de mostrador 2 y se va.");
+                sMostrador2.release();
+            }
+        } catch (InterruptedException ex) {
+            System.err.println("Error en Confiteria retiraMenu.");
+        }
+    }
+
+    public void retiraPostre(Esquiador esq) {
+        try {
+            System.out.println(esq.getNombre() + " va a retirar el postre y solicita el semaforo.");
+            sPostre.acquire();
+            esq.esperar(1);//Simula el tiempo que demora en retirar el postre
+            System.out.println(esq.getNombre() + " libera el semaforo de Postre y se va.");
+            sPostre.release();
+        } catch (InterruptedException ex) {
+            System.err.println("Error en Confiteria retiraPostre.");
+        }
+    }
+
     public void saleConfiteria(Esquiador esq) {
 
         try {
@@ -70,7 +113,6 @@ public class Confiteria {
             sCantPersonas.acquire();
             cantPersonas--;
             System.out.println(esq.getNombre() + " resta persona a la confitería y quedan " + cantPersonas);
-//          notifyAll();
             System.out.println(esq.getNombre() + " libera el semáforo.");
             sCantPersonas.release();
         } catch (InterruptedException ex) {
