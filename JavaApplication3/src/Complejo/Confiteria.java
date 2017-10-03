@@ -21,7 +21,7 @@ public class Confiteria {
     private boolean mostradorPostre;
     private boolean caja;
     private Semaphore sCaja;
-    private Semaphore sSalida;
+    private Semaphore sCantPersonas;
 
     public Confiteria() {
         this.cantPersonas = 98;
@@ -30,11 +30,11 @@ public class Confiteria {
         this.mostradorPostre = true;
         this.caja = true;
         sCaja = new Semaphore(1);
-        sSalida = new Semaphore(1);
+        sCantPersonas = new Semaphore(1);
     }
 
     public boolean comprarMenu(Esquiador esq) {
-        int aux = 0;
+        boolean aux = false;
 
         try {
             System.out.println(esq.getNombre() + " llega a la caja y pide el semáforo.");
@@ -48,33 +48,31 @@ public class Confiteria {
                 esq.setMenu((int) (Math.random() * 2) + 1);
                 System.out.println(esq.getNombre() + " compra el menu " + esq.getMenu() + ".");
                 System.out.println(esq.getNombre() + " libera la caja (semaforo) y sale.");
-                sCaja.release();
-                aux = 1;
+                aux = true;
             } else {
                 System.out.println(esq.getNombre() + " quiso entrar a la confitería pero esta llena.");
-                aux = 0;
+                aux = false;
             }
+            sCaja.release();
 
         } catch (InterruptedException ex) {
             System.err.println("Error en Confiteria comprarMenu.");
         }
-        if (aux == 1) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return aux;
+
     }
 
     public void saleConfiteria(Esquiador esq) {
 
         try {
             System.out.println(esq.getNombre() + " se quiere ir y pide el semaforo.");
-            sSalida.acquire();
+            sCantPersonas.acquire();
             cantPersonas--;
             System.out.println(esq.getNombre() + " resta persona a la confitería y quedan " + cantPersonas);
-//            notifyAll();
+//          notifyAll();
             System.out.println(esq.getNombre() + " libera el semáforo.");
-            sSalida.release();
+            sCantPersonas.release();
         } catch (InterruptedException ex) {
             System.err.println("Error en Confiteria saleConfiteria.");
         }
