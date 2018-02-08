@@ -17,14 +17,17 @@ public class Test {
     public static void main(String[] args) throws InterruptedException {
        
         Confiteria conf= new Confiteria();
+        GestionaInst monInst= new GestionaInst();
+        CaidaRapida monMedios= new CaidaRapida();
         ArrayList esqVector= new ArrayList (10);
         Random r= new Random ();
         
         int aux;
         for (aux=0; aux<5; aux++){
             String nombre="E"+aux;
-            esqVector.add(new Esquiador (nombre, 1,conf));
+            esqVector.add(new Esquiador (nombre, 1,conf, monInst, monMedios));
         }
+        monMedios.startAerosillas();
         for (aux=0; aux<5; aux++){
             ((Esquiador)esqVector.get(aux)).start();
             Thread.sleep(r.nextInt(1000));

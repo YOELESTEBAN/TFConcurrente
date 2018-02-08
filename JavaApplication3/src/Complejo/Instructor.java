@@ -12,7 +12,4 @@ package Complejo;
 public class Instructor {
     private int id;
     
-    
-    
-    
 }

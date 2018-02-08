@@ -23,7 +23,6 @@ public class Molinete {
         this.contador = contador;
     }
     
-    
     public int getContador(){
         return contador; 
     }
