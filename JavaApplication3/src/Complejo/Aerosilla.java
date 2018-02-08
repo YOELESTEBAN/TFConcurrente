@@ -21,6 +21,7 @@ public class Aerosilla extends Thread {
 
     public void run() {
         try {
+            Thread.sleep(1000);
             while (true) {
                 this.medio.entraAerosilla();
                 Thread.sleep(100);//Duerme el hilo por 0.1 segundo

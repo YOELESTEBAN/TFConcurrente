@@ -6,8 +6,6 @@
 package Complejo;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +17,6 @@ public class Medio {
     private int tipo; //Tipo de medio (entre 1 y 4)
     private int molinetesDisp; //Contador de molinetes disponibles
     private boolean pasaAerosilla; //Cuando pasaAerosilla=true entonces pueden subir 
-    
 
     public Medio(int tipo) {
         molinetesDisp = tipo; //Cantidad de molinetes que tiene el medio
@@ -42,19 +39,18 @@ public class Medio {
         Molinete nuevo = new Molinete(id); //Crea el molinete con contador 0 y el id que ingresa al metodo
         this.molinetes.add(nuevo); //Inserta el molinete en el vector de este medio
     }
-    
-    public synchronized void entraAerosilla(){
-        System.out.println("*********************** Entra AEROSILLA DE MEDIO "+ this.tipo);
-        pasaAerosilla=true;
+
+    public synchronized void entraAerosilla() {
+        System.out.println("**** Entra AEROSILLA DE MEDIO " + this.tipo + "****");
+        pasaAerosilla = true;
         notifyAll();
     }
-    
-    public synchronized void saleAerosilla(){
-        System.out.println("*********************** SALE AEROSILLA DE MEDIO "+ this.tipo);
-        pasaAerosilla=false;
+
+    public synchronized void saleAerosilla() {
+        System.out.println("**** Sale AEROSILLA DE MEDIO " + this.tipo + "****");
+        pasaAerosilla = false;
         notifyAll();//Notifica el cambio de pasaAerosilla y molinetesDisp
     }
-
 
     public synchronized void usarMedio() {
         try {
@@ -65,7 +61,7 @@ public class Medio {
             molinetesDisp--;
             System.out.println(Thread.currentThread().toString() + " pasó el molinete del medio " + this.tipo);
             //notifyAll();
-            while (!pasaAerosilla){
+            while (!pasaAerosilla) {
                 System.out.println(Thread.currentThread().toString() + " espera a que pase la aerosilla en el medio " + this.tipo);
                 this.wait();
             }

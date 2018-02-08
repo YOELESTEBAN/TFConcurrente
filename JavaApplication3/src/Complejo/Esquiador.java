@@ -6,7 +6,7 @@
 package Complejo;
 
 import java.util.Random;
-
+import javax.swing.JTextArea;
 
 /**
  *
@@ -15,24 +15,26 @@ import java.util.Random;
 public class Esquiador extends Thread {
 
     private String nombre; //Nombre del Esquiador
-    private Confiteria conf;
+    private Confiteria conf; //Confitería del complejo
     private GestionaInst monInst; //Monitor de instructores
     private CaidaRapida monMedio; //Monitor de medios de elevación
-    private int tipoMedio;
-    private int menu;
-    private boolean postre;
-    private boolean claseSky;
-    private Random r;
+    private int tipoMedio; //Indica tipo de medio (1,2,3 o 4)
+    private int menu; //Indica menu que se va a servir en la confitería
+    private boolean postre; //Indica si compra postre en la confitería
+    private boolean claseSky; //Indica si toma clase de Sky (en false toma clase de Snow)
+    private Random r; //Random que se usa para variar la clase que toma (sky o snow)
+    private JTextArea salidaT; //Salida de texto en Interfaz
 
-    public Esquiador(String nombre, int tipoDeMedio, Confiteria conf, GestionaInst monInst, CaidaRapida m) {
+    public Esquiador(String nombre, int tipoDeMedio, Confiteria conf, GestionaInst monInst, CaidaRapida m, JTextArea salida) {
         this.nombre = nombre;
         this.tipoMedio = tipoDeMedio;
         this.conf = conf;
-        this.menu = 0;
-        this.postre=false;
-        this.monInst=monInst;
-        this.claseSky=true;
-        this.monMedio=m;
+        this.menu = 0; //Este valor no es relevante porque luego se llama al metodo cambiaRandom()
+        this.postre = false; //Este valor no es relevante porque luego se llama al metodo cambiaRandom()
+        this.monInst = monInst;
+        this.claseSky = true;//Este valor no es relevante porque luego se llama al metodo cambiaRandom()
+        this.monMedio = m;
+        this.salidaT = salida;
     }
 
     public void setTipoDeMedio(int tipoDeMedio) {
@@ -43,10 +45,14 @@ public class Esquiador extends Thread {
         this.menu = tipoMenu;
     }
 
+    public void setPostre(boolean i) {
+        this.postre = i;
+    }
+
     public int getTipoDeMedio() {
         return tipoMedio;
     }
-    
+
     public boolean getTipoDeClase() {
         return claseSky;
     }
@@ -54,11 +60,8 @@ public class Esquiador extends Thread {
     public int getMenu() {
         return menu;
     }
-     public void setPostre(boolean i) {
-        this.postre=i;
-    }
-    
-    public boolean getPostre (){
+
+    public boolean getPostre() {
         return this.postre;
     }
 
@@ -66,16 +69,28 @@ public class Esquiador extends Thread {
         return nombre;
     }
 
+    private void cambiaRandom() {
+        r = new Random();
+        this.claseSky = r.nextBoolean();//Genera un random booleano para ir cambiando la clase que tome (sky True, snow False)
+        this.postre = r.nextBoolean();//Genera un random booleano para ir cambiando si compra o no postre.
+        this.tipoMedio = (int) (Math.random() * 4) + 1; //Genera un random entre 1 y 4 para ir cambiando el medio
+        this.menu = (int) (Math.random() * 2) + 1; //Genera un random entre 1 y 2 para ir cambiando el menu
+
+    }
+
     private void cambiaMedioRandom() {
         this.tipoMedio = (int) (Math.random() * 4) + 1; //Genera un random entre 1 y 4 para ir cambiando el medio
     }
-    
+
     private void cambiaClaseRandom() {
         r = new Random();
         this.claseSky = r.nextBoolean();//Genera un random booleano para ir cambiando la clase que tome (sky True, snow False)
     }
-    
-    
+
+    private void cambiaMenuRandom() {
+        this.menu = (int) (Math.random() * 2) + 1; //Genera un random entre 1 y 2 para ir cambiando el menu
+    }
+
     @Override
     public String toString() {
         return nombre;
@@ -91,34 +106,34 @@ public class Esquiador extends Thread {
     @Override
     public void run() {
         try {
+            salidaT.append(this.getNombre() + " entra al complejo.\n");
             while (true) {
-                System.out.println(this.getNombre()+" empieza.");
-                /*complejo.usarMedio(tipoDeMedio);
-                this.esperar(5);
-                this.cambiaMedioRandom();*/
-                
-               /* if (conf.comprarMenu(this)) {
+                this.cambiaRandom();
+                System.out.println(this.getNombre() + " empieza.");
+
+                System.out.println(this.getNombre() + " va a la CONFITERÍA.");
+                if (conf.comprarMenu(this)) {
                     conf.retiraMenu(this);
-                    if (this.getPostre()){
+                    if (this.getPostre()) {
                         conf.retiraPostre(this);
                     }
-                    System.out.println(this.getNombre()+ " come.");
+                    System.out.println(this.getNombre() + " come.");
                     this.esperar(5);
                     conf.saleConfiteria(this);
                 }
-                System.out.println(this.getNombre()+ " se va de confitería, espera un toque y vuelve a comenzar.");
+                System.out.println(this.getNombre() + " se va de confitería.");
                 this.esperar(5);
-                
-                this.cambiaClaseRandom(); //Cambia la clase para que sea random desde el principio
+
+                System.out.println(this.getNombre() + " va a TOMAR UNA CLASE.");
                 monInst.iniciarClase(this.getTipoDeClase());
                 this.esperar(5);
                 monInst.terminarClase(this.getTipoDeClase());
                 this.esperar(5);
-                */
-                this.cambiaMedioRandom();
+                /*
+                
+                System.out.println(this.getNombre()+" va a SUBIR A UN MEDIO.");
                 monMedio.entrarMedio(tipoMedio);
-                //monMedio.entrarMedio(1);
-                this.esperar(5);
+                this.esperar(5);*/
             }
         } catch (InterruptedException ex) {
             System.err.println("Error en runEsquiador.");

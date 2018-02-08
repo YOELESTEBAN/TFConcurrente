@@ -5,6 +5,9 @@
  */
 package Complejo;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author Yoni
@@ -29,12 +32,19 @@ public class Interfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPaneClases = new javax.swing.JScrollPane();
+        textoClases = new javax.swing.JTextArea();
         jScrollPaneConfiteria = new javax.swing.JScrollPane();
+        textoConfiteria = new javax.swing.JTextArea();
         jScrollPaneEsquiadores = new javax.swing.JScrollPane();
+        textoEsquiadores = new javax.swing.JTextArea();
         jScrollPaneMedio2 = new javax.swing.JScrollPane();
+        textoMedio2 = new javax.swing.JTextArea();
         jScrollPaneMedio3 = new javax.swing.JScrollPane();
+        textoMedio3 = new javax.swing.JTextArea();
         jScrollPaneMedio4 = new javax.swing.JScrollPane();
+        textoMedio4 = new javax.swing.JTextArea();
         jScrollPaneMedio1 = new javax.swing.JScrollPane();
+        textoMedio1 = new javax.swing.JTextArea();
         jButtonAbrirComplejo = new javax.swing.JButton();
         jButtonCerrarComplejo = new javax.swing.JButton();
         jButtonStop = new javax.swing.JButton();
@@ -49,14 +59,66 @@ public class Interfaz extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1024, 768));
 
         jScrollPaneClases.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        textoClases.setEditable(false);
+        textoClases.setColumns(20);
+        textoClases.setLineWrap(true);
+        textoClases.setRows(5);
+        textoClases.setWrapStyleWord(true);
+        jScrollPaneClases.setViewportView(textoClases);
+
         jScrollPaneConfiteria.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPaneConfiteria.setAutoscrolls(true);
+
+        textoConfiteria.setEditable(false);
+        textoConfiteria.setColumns(20);
+        textoConfiteria.setLineWrap(true);
+        textoConfiteria.setRows(5);
+        textoConfiteria.setWrapStyleWord(true);
+        textoConfiteria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        textoConfiteria.setDragEnabled(true);
+        jScrollPaneConfiteria.setViewportView(textoConfiteria);
 
         jScrollPaneEsquiadores.setBorder(null);
-        jScrollPaneEsquiadores.setViewportBorder(javax.swing.BorderFactory.createTitledBorder("Esquiadores Activos"));
+        jScrollPaneEsquiadores.setViewportBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        textoEsquiadores.setEditable(false);
+        textoEsquiadores.setColumns(20);
+        textoEsquiadores.setLineWrap(true);
+        textoEsquiadores.setRows(5);
+        textoEsquiadores.setToolTipText("");
+        textoEsquiadores.setWrapStyleWord(true);
+        jScrollPaneEsquiadores.setViewportView(textoEsquiadores);
+
+        textoMedio2.setEditable(false);
+        textoMedio2.setColumns(20);
+        textoMedio2.setLineWrap(true);
+        textoMedio2.setRows(5);
+        textoMedio2.setWrapStyleWord(true);
+        jScrollPaneMedio2.setViewportView(textoMedio2);
+
+        textoMedio3.setEditable(false);
+        textoMedio3.setColumns(20);
+        textoMedio3.setLineWrap(true);
+        textoMedio3.setRows(5);
+        textoMedio3.setWrapStyleWord(true);
+        jScrollPaneMedio3.setViewportView(textoMedio3);
+
+        textoMedio4.setEditable(false);
+        textoMedio4.setColumns(20);
+        textoMedio4.setLineWrap(true);
+        textoMedio4.setRows(5);
+        textoMedio4.setWrapStyleWord(true);
+        jScrollPaneMedio4.setViewportView(textoMedio4);
+
+        textoMedio1.setEditable(false);
+        textoMedio1.setColumns(20);
+        textoMedio1.setLineWrap(true);
+        textoMedio1.setRows(5);
+        textoMedio1.setWrapStyleWord(true);
+        jScrollPaneMedio1.setViewportView(textoMedio1);
 
         jButtonAbrirComplejo.setText("Abrir Complejo");
         jButtonAbrirComplejo.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +148,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        jLabelEsquiadores.setText("Esquiadores Activos");
+        jLabelEsquiadores.setText("Entrada al complejo");
 
         jLabelConfiteria.setText("Confitería");
 
@@ -110,46 +172,50 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelEsquiadores)
-                                    .addComponent(jScrollPaneEsquiadores, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabelConfiteria)
-                                        .addGap(200, 200, 200))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(59, 59, 59)))
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabelEsquiadores)
+                                .addGap(146, 146, 146)
+                                .addComponent(jLabelConfiteria)
+                                .addGap(249, 249, 249)
+                                .addComponent(jLabelClases)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPaneClases, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(81, 81, 81)
+                                        .addComponent(jLabelMedio1)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPaneEsquiadores, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPaneMedio2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelMedio2))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(29, 29, 29)
+                                                .addComponent(jLabelMedio3))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(21, 21, 21)
+                                                .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jScrollPaneMedio4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jScrollPaneClases, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(55, 55, 55)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jButtonCerrarComplejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jButtonStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonAbrirComplejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jLabelClases)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelMedio1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPaneMedio2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelMedio2))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelMedio3)
-                                    .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(192, 192, 192)))
-                        .addGap(96, 96, 96))
+                                            .addComponent(jButtonAbrirComplejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPaneMedio1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelMedio4)
-                            .addComponent(jScrollPaneMedio4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))))
+                        .addComponent(jLabelMedio4)
+                        .addGap(158, 158, 158))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,10 +247,10 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jLabelMedio4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneMedio4, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneMedio4)
                     .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPaneMedio2)
-                    .addComponent(jScrollPaneMedio1))
+                    .addComponent(jScrollPaneMedio1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -192,11 +258,29 @@ public class Interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAbrirComplejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirComplejoActionPerformed
-        // TODO add your handling code here:
+        Confiteria conf = new Confiteria(textoConfiteria);
+        GestionaInst monInst = new GestionaInst(textoClases);
+        CaidaRapida monMedios = new CaidaRapida();
+        ArrayList esqVector = new ArrayList(10);
+        Random r = new Random();
+        int aux;
+        try {
+            for (aux = 0; aux < 10; aux++) {
+                String nombre = "ESQUIADOR " + aux;
+                esqVector.add(new Esquiador(nombre, 1, conf, monInst, monMedios, textoEsquiadores));
+            }
+            monMedios.startAerosillas();
+            for (aux = 0; aux < 10; aux++) {
+                ((Esquiador) esqVector.get(aux)).start();
+                Thread.sleep(r.nextInt(1000));
+            }
+        } catch (InterruptedException ex) {
+            System.err.println("Error en Boton Abrir Complejo.");
+        }
     }//GEN-LAST:event_jButtonAbrirComplejoActionPerformed
 
     private void jButtonCerrarComplejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarComplejoActionPerformed
-        // TODO add your handling code here:
+        textoEsquiadores.append("lalanuevo");
     }//GEN-LAST:event_jButtonCerrarComplejoActionPerformed
 
     private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
@@ -261,5 +345,12 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneMedio2;
     private javax.swing.JScrollPane jScrollPaneMedio3;
     private javax.swing.JScrollPane jScrollPaneMedio4;
+    private javax.swing.JTextArea textoClases;
+    private javax.swing.JTextArea textoConfiteria;
+    private javax.swing.JTextArea textoEsquiadores;
+    private javax.swing.JTextArea textoMedio1;
+    private javax.swing.JTextArea textoMedio2;
+    private javax.swing.JTextArea textoMedio3;
+    private javax.swing.JTextArea textoMedio4;
     // End of variables declaration//GEN-END:variables
 }
