@@ -14,10 +14,11 @@ import javax.swing.JTextArea;
  */
 public class Esquiador extends Thread {
 
+    private CaidaRapida complejo;
     private String nombre; //Nombre del Esquiador
     private Confiteria conf; //Confitería del complejo
     private GestionaInst monInst; //Monitor de instructores
-    private CaidaRapida monMedio; //Monitor de medios de elevación
+    private GestionaMedio monMedio; //Monitor de medios de elevación
     private int tipoMedio; //Indica tipo de medio (1,2,3 o 4)
     private int menu; //Indica menu que se va a servir en la confitería
     private boolean postre; //Indica si compra postre en la confitería
@@ -25,9 +26,10 @@ public class Esquiador extends Thread {
     private Random r; //Random que se usa para variar la clase que toma (sky o snow)
     private JTextArea salidaT; //Salida de texto en Interfaz
 
-    public Esquiador(String nombre, int tipoDeMedio, Confiteria conf, GestionaInst monInst, CaidaRapida m, JTextArea salida) {
+    public Esquiador(String nombre, Confiteria conf, GestionaInst monInst, GestionaMedio m, JTextArea salida, CaidaRapida comp) {
+        this.complejo = comp;
         this.nombre = nombre;
-        this.tipoMedio = tipoDeMedio;
+        this.tipoMedio = 1;//Este valor no es relevante porque luego se llama al metodo cambiaRandom()
         this.conf = conf;
         this.menu = 0; //Este valor no es relevante porque luego se llama al metodo cambiaRandom()
         this.postre = false; //Este valor no es relevante porque luego se llama al metodo cambiaRandom()
@@ -53,7 +55,7 @@ public class Esquiador extends Thread {
         return tipoMedio;
     }
 
-    public boolean getTipoDeClase() {
+    public boolean getClaseSky() {
         return claseSky;
     }
 
@@ -69,7 +71,7 @@ public class Esquiador extends Thread {
         return nombre;
     }
 
-    private void cambiaRandom() {
+    private void cambiaRandom() {//Este método cambia los valores correspondientes al menu, postre, la clase que toma el esquiador y que tipo de medio utiliza
         r = new Random();
         this.claseSky = r.nextBoolean();//Genera un random booleano para ir cambiando la clase que tome (sky True, snow False)
         this.postre = r.nextBoolean();//Genera un random booleano para ir cambiando si compra o no postre.
@@ -106,35 +108,59 @@ public class Esquiador extends Thread {
     @Override
     public void run() {
         try {
+            int aux;
             salidaT.append(this.getNombre() + " entra al complejo.\n");
-            while (true) {
-                this.cambiaRandom();
+            while (complejo.estaAbierto()) {
+                this.cambiaRandom();//Este método cambia el menu, postre, el medio a utilizar, y la clase que puede tomar
                 System.out.println(this.getNombre() + " empieza.");
+                aux = (int) (Math.random() * 3) + 1;//Genera un random entre 1 y 3 para ir cambiando la acción del esquiador
+                System.out.println(this.nombre + " elije opcion: " + aux);
+                switch (3) {
+                    case 1:
+                        System.out.println(this.getNombre() + " va a la CONFITERÍA.");
+                        if (conf.comprarMenu(this)) {//Si logra entrar a la confitería y compra menu
+                            conf.retiraMenu(this);//Como logró entrar a la confitería y compro el menu, lo retira
+                            if (this.getPostre()) {//Si el esquiador compro postre
+                                conf.retiraPostre(this);//Retira el postre
+                            }
+                            System.out.println(this.getNombre() + " come.");
+                            conf.come(this);//Come en la confitería
+                            conf.saleConfiteria(this);//Al terminar de comer sale de la confitería
+                        }
+                        System.out.println(this.getNombre() + " se va de confitería.");
+                        break;
 
-                System.out.println(this.getNombre() + " va a la CONFITERÍA.");
-                if (conf.comprarMenu(this)) {
-                    conf.retiraMenu(this);
-                    if (this.getPostre()) {
-                        conf.retiraPostre(this);
-                    }
-                    System.out.println(this.getNombre() + " come.");
-                    this.esperar(5);
-                    conf.saleConfiteria(this);
+                    case 2:
+                        System.out.println(this.getNombre() + " va a TOMAR UNA CLASE.");
+                        if (false) {
+                            monInst.tomarClaseSky(this);
+                        } else {
+                            monInst.tomarClaseSnow(this);
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println(this.getNombre() + " va a SUBIR A UN MEDIO.");
+                        monMedio.entrarMedio(tipoMedio);
+                         switch (tipoMedio){
+                             case 1: this.esperar(30);break;//Simula cuanto demora en subir y bajar del medio 1
+                             case 2: this.esperar(25);break;//Simula cuanto demora en subir y bajar del medio 2
+                             case 3: this.esperar(20);break;//Simula cuanto demora en subir y bajar del medio 3
+                             case 4: this.esperar(15);break;//Simula cuanto demora en subir y bajar del medio 4
+                             default: 
+                                 System.out.println(this.getNombre() + " eligió un medio inválido");
+                                salidaT.append(this.getNombre() + " eligió un medio inválido.\n");
+                        }
+                        break;
+                    default:
+                        System.out.println(this.getNombre() + " eligió hacer una acción inválida");
+                        salidaT.append(this.getNombre() + " eligió hacer una acción inválida.\n");
                 }
-                System.out.println(this.getNombre() + " se va de confitería.");
-                this.esperar(5);
-
-                System.out.println(this.getNombre() + " va a TOMAR UNA CLASE.");
-                monInst.iniciarClase(this.getTipoDeClase());
-                this.esperar(5);
-                monInst.terminarClase(this.getTipoDeClase());
-                this.esperar(5);
-                /*
-                
-                System.out.println(this.getNombre()+" va a SUBIR A UN MEDIO.");
-                monMedio.entrarMedio(tipoMedio);
-                this.esperar(5);*/
+                this.esperar(5);//Simula el tiempo que transcurre entre que termina una actividad y comienza otra
             }
+            salidaT.append(this.getNombre() + " sale del complejo.\n");
+            System.out.println(this.getNombre() + " se va.");
+            complejo.saleEsquiador();//Sale el esquiador del complejo
         } catch (InterruptedException ex) {
             System.err.println("Error en runEsquiador.");
         }

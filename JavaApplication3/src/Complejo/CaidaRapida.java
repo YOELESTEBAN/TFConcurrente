@@ -5,45 +5,68 @@
  */
 package Complejo;
 
-import java.util.ArrayList;
 import javax.swing.JTextArea;
 
 /**
  *
  * @author Yoni
  */
-public class CaidaRapida {//Monitor de medios
+public class CaidaRapida {
 
-    private ArrayList medios;//Arreglo que almacena los medios
-    private ArrayList aerosillas;//Arreglo que almacena las aerosillas de cada medio
-    private JTextArea salidaT;//Salida de texto en Interfaz
+    private boolean estaAbierto;
+    private Confiteria conf;
+    private GestionaInst monInst;
+    private GestionaMedio monMedios;
+    private int cantEsquiadores;
+    private JTextArea textoEsquiadores;
+    private JTextArea textoM1;
+    private JTextArea textoM2;
+    private JTextArea textoM3;
+    private JTextArea textoM4;
 
-    public CaidaRapida() {
-        int i;
-        Medio m;
-        Aerosilla aero;
-        medios = new ArrayList(5);
-        aerosillas = new ArrayList(5);
-        for (i = 1; i < 5; i++) {
-            m = new Medio(i);
-            aero = new Aerosilla(i, m);//Crea la aerosilla del medio que corresponde
-            medios.add(m);
-            aerosillas.add(aero);
+    public CaidaRapida(JTextArea textoConfiteria, JTextArea textoClases, JTextArea textoEsq, JTextArea textoM1, JTextArea textoM2, JTextArea textoM3, JTextArea textoM4) {
+        conf = new Confiteria(textoConfiteria);
+        monInst = new GestionaInst(textoClases);
+        this.textoEsquiadores = textoEsq;
+        cantEsquiadores = 0;
+        this.textoM1 = textoM1;
+        this.textoM2 = textoM2;
+        this.textoM3 = textoM3;
+        this.textoM4 = textoM4;
+    }
+
+    public void iniciaMedios(CaidaRapida comp) {
+        this.monMedios = new GestionaMedio(comp, textoM1, textoM2, textoM3, textoM4);
+        monMedios.startMedios();
+    }
+
+    public void abrirComplejo() {
+        estaAbierto = true;
+    }
+
+    public void cerrarComplejo() {
+        estaAbierto = false;
+    }
+
+    public boolean estaAbierto() {
+        return this.estaAbierto;
+    }
+
+    public void entraEsquiador(CaidaRapida comp, String nombre) {
+        Esquiador aux = new Esquiador(nombre, conf, monInst, monMedios, textoEsquiadores, comp);
+        cantEsquiadores++;
+        aux.start();
+    }
+
+    public void saleEsquiador() {
+        cantEsquiadores--;
+        if (cantEsquiadores == 0) {
+            textoEsquiadores.append("El complejo esta CERRADO.\n");
         }
     }
 
-    public void entrarMedio(int tipo) {
-        System.out.println(Thread.currentThread().toString() + " quiere entrar al medio " + tipo);
-        Medio m = (Medio) (medios.get(tipo - 1));
-        m.usarMedio();
+    public String getEstadistica() {
+        return this.monMedios.getEstadistica();
     }
 
-    public void startAerosillas() {
-        int i;
-        Aerosilla aero;
-        for (i = 1; i < 5; i++) {
-            aero = (Aerosilla) (this.aerosillas.get(i - 1));
-            aero.start();
-        }
-    }
 }

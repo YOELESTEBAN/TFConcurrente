@@ -5,8 +5,9 @@
  */
 package Complejo;
 
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,9 +15,8 @@ import java.util.Random;
  */
 public class Interfaz extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Interfaz
-     */
+    private CaidaRapida complejo;
+
     public Interfaz() {
         initComponents();
         this.setLocationRelativeTo(null); //Para ubicarlo en el centro de la pantalla
@@ -45,9 +45,8 @@ public class Interfaz extends javax.swing.JFrame {
         textoMedio4 = new javax.swing.JTextArea();
         jScrollPaneMedio1 = new javax.swing.JScrollPane();
         textoMedio1 = new javax.swing.JTextArea();
-        jButtonAbrirComplejo = new javax.swing.JButton();
-        jButtonCerrarComplejo = new javax.swing.JButton();
-        jButtonStop = new javax.swing.JButton();
+        jButtonAbrirCerrar = new javax.swing.JButton();
+        jButtonEstadistica = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
         jLabelEsquiadores = new javax.swing.JLabel();
         jLabelConfiteria = new javax.swing.JLabel();
@@ -56,6 +55,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabelMedio2 = new javax.swing.JLabel();
         jLabelMedio3 = new javax.swing.JLabel();
         jLabelMedio4 = new javax.swing.JLabel();
+        jButtonAgregarEsquiador = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -120,24 +120,20 @@ public class Interfaz extends javax.swing.JFrame {
         textoMedio1.setWrapStyleWord(true);
         jScrollPaneMedio1.setViewportView(textoMedio1);
 
-        jButtonAbrirComplejo.setText("Abrir Complejo");
-        jButtonAbrirComplejo.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAbrirCerrar.setBackground(Color.red);
+        jButtonAbrirCerrar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonAbrirCerrar.setText("Abrir Complejo");
+        jButtonAbrirCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAbrirComplejoActionPerformed(evt);
+                jButtonAbrirCerrarActionPerformed(evt);
             }
         });
 
-        jButtonCerrarComplejo.setText("Cerrar Complejo");
-        jButtonCerrarComplejo.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEstadistica.setText("Ver Estadísticas");
+        jButtonEstadistica.setEnabled(false);
+        jButtonEstadistica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCerrarComplejoActionPerformed(evt);
-            }
-        });
-
-        jButtonStop.setText("Stop");
-        jButtonStop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonStopActionPerformed(evt);
+                jButtonEstadisticaActionPerformed(evt);
             }
         });
 
@@ -162,6 +158,14 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabelMedio4.setText("Medio de Elevación 4");
 
+        jButtonAgregarEsquiador.setText("Agregar Esquiador");
+        jButtonAgregarEsquiador.setEnabled(false);
+        jButtonAgregarEsquiador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarEsquiadorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,36 +184,32 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jLabelClases)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelMedio1)
+                                .addGap(18, 126, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPaneMedio2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelMedio2))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelMedio1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPaneEsquiadores, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(jLabelMedio3))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPaneMedio2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelMedio2))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(29, 29, 29)
-                                                .addComponent(jLabelMedio3))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(21, 21, 21)
-                                                .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jScrollPaneMedio4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jScrollPaneClases, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(55, 55, 55)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jButtonCerrarComplejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonAbrirComplejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addGap(21, 21, 21)
+                                        .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPaneMedio4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPaneEsquiadores)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jScrollPaneClases, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonEstadistica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonAbrirCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonAgregarEsquiador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPaneMedio1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,19 +226,19 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jLabelConfiteria)
                     .addComponent(jLabelClases))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPaneEsquiadores, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jButtonAbrirComplejo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCerrarComplejo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
-                        .addComponent(jButtonStop, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
-                    .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneClases))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAbrirCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAgregarEsquiador, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPaneEsquiadores, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPaneConfiteria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                        .addComponent(jScrollPaneClases)))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelMedio1)
@@ -250,46 +250,57 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jScrollPaneMedio4)
                     .addComponent(jScrollPaneMedio3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPaneMedio2)
-                    .addComponent(jScrollPaneMedio1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneMedio1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAbrirComplejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirComplejoActionPerformed
-        Confiteria conf = new Confiteria(textoConfiteria);
-        GestionaInst monInst = new GestionaInst(textoClases);
-        CaidaRapida monMedios = new CaidaRapida();
-        ArrayList esqVector = new ArrayList(10);
-        Random r = new Random();
-        int aux;
-        try {
-            for (aux = 0; aux < 10; aux++) {
-                String nombre = "ESQUIADOR " + aux;
-                esqVector.add(new Esquiador(nombre, 1, conf, monInst, monMedios, textoEsquiadores));
+    private void jButtonAbrirCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirCerrarActionPerformed
+
+        if (jButtonAbrirCerrar.getBackground() == Color.red) {
+            jButtonAbrirCerrar.setBackground(Color.GREEN);
+            jButtonAbrirCerrar.setForeground(Color.BLACK);
+            jButtonAbrirCerrar.setText("Cerrar Complejo");
+            jButtonAgregarEsquiador.setEnabled(true);
+            this.complejo = new CaidaRapida(textoConfiteria, textoClases, textoEsquiadores, textoMedio1, textoMedio2, textoMedio3, textoMedio4);
+            complejo.iniciaMedios(complejo);
+            complejo.abrirComplejo();
+            Random r = new Random();
+            int aux;
+            try {
+                for (aux = 0; aux < 50; aux++) {
+                    String nombre = "E" + aux;
+                    complejo.entraEsquiador(complejo, nombre);
+                    Thread.sleep(r.nextInt(100));
+                }
+            } catch (InterruptedException ex) {
+                System.err.println("Error en Boton Abrir Complejo.");
             }
-            monMedios.startAerosillas();
-            for (aux = 0; aux < 10; aux++) {
-                ((Esquiador) esqVector.get(aux)).start();
-                Thread.sleep(r.nextInt(1000));
-            }
-        } catch (InterruptedException ex) {
-            System.err.println("Error en Boton Abrir Complejo.");
+        } else {
+            jButtonAbrirCerrar.setBackground(Color.RED);
+            jButtonAbrirCerrar.setText("Abrir Complejo");
+            jButtonAbrirCerrar.setForeground(Color.WHITE);
+            jButtonAbrirCerrar.setEnabled(false);
+            complejo.cerrarComplejo();
+            jButtonEstadistica.setEnabled(true);
         }
-    }//GEN-LAST:event_jButtonAbrirComplejoActionPerformed
 
-    private void jButtonCerrarComplejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarComplejoActionPerformed
-        textoEsquiadores.append("lalanuevo");
-    }//GEN-LAST:event_jButtonCerrarComplejoActionPerformed
+    }//GEN-LAST:event_jButtonAbrirCerrarActionPerformed
 
-    private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonStopActionPerformed
+    private void jButtonEstadisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticaActionPerformed
+        JOptionPane.showMessageDialog(rootPane, complejo.getEstadistica());
+    }//GEN-LAST:event_jButtonEstadisticaActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jButtonAgregarEsquiadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarEsquiadorActionPerformed
+        String nombre = JOptionPane.showInputDialog("Escribe el nombre del esquiador:");
+        complejo.entraEsquiador(complejo, nombre);
+    }//GEN-LAST:event_jButtonAgregarEsquiadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,10 +338,10 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAbrirComplejo;
-    private javax.swing.JButton jButtonCerrarComplejo;
+    private javax.swing.JButton jButtonAbrirCerrar;
+    private javax.swing.JButton jButtonAgregarEsquiador;
+    private javax.swing.JButton jButtonEstadistica;
     private javax.swing.JButton jButtonSalir;
-    private javax.swing.JButton jButtonStop;
     private javax.swing.JLabel jLabelClases;
     private javax.swing.JLabel jLabelConfiteria;
     private javax.swing.JLabel jLabelEsquiadores;

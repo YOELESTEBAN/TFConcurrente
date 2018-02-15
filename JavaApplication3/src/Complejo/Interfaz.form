@@ -39,45 +39,37 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
+                              <Component id="jLabelMedio1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" pref="126" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabelMedio1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="jScrollPaneEsquiadores" pref="208" max="32767" attributes="0"/>
+                                  <Component id="jScrollPaneMedio2" min="-2" pref="211" max="-2" attributes="0"/>
+                                  <Component id="jLabelMedio2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jScrollPaneMedio2" min="-2" pref="211" max="-2" attributes="0"/>
-                                          <Component id="jLabelMedio2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                              <Component id="jLabelMedio3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Component id="jScrollPaneMedio3" min="-2" pref="226" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jScrollPaneMedio4" min="-2" pref="229" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedio3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jScrollPaneConfiteria" min="-2" pref="242" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="jScrollPaneClases" min="-2" pref="251" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jButtonCerrarComplejo" max="32767" attributes="0"/>
-                                          <Component id="jButtonSalir" max="32767" attributes="0"/>
-                                          <Component id="jButtonStop" max="32767" attributes="0"/>
-                                          <Component id="jButtonAbrirComplejo" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="jScrollPaneMedio3" min="-2" pref="226" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jScrollPaneMedio4" min="-2" pref="229" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jScrollPaneEsquiadores" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jScrollPaneConfiteria" min="-2" pref="242" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="jScrollPaneClases" min="-2" pref="251" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jButtonSalir" max="32767" attributes="0"/>
+                                  <Component id="jButtonEstadistica" max="32767" attributes="0"/>
+                                  <Component id="jButtonAbrirCerrar" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButtonAgregarEsquiador" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -103,20 +95,21 @@
                   <Component id="jLabelClases" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jScrollPaneEsquiadores" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButtonAbrirComplejo" min="-2" pref="62" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonCerrarComplejo" min="-2" pref="61" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                      <Component id="jButtonStop" min="-2" pref="54" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonSalir" min="-2" pref="64" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButtonAbrirCerrar" min="-2" pref="62" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonAgregarEsquiador" min="-2" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonEstadistica" min="-2" pref="54" max="-2" attributes="0"/>
+                      <EmptySpace pref="52" max="32767" attributes="0"/>
+                      <Component id="jButtonSalir" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPaneConfiteria" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jScrollPaneClases" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jScrollPaneEsquiadores" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPaneConfiteria" alignment="0" pref="269" max="32767" attributes="0"/>
+                      <Component id="jScrollPaneClases" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -130,7 +123,7 @@
                   <Component id="jScrollPaneMedio4" max="32767" attributes="0"/>
                   <Component id="jScrollPaneMedio3" alignment="1" max="32767" attributes="0"/>
                   <Component id="jScrollPaneMedio2" max="32767" attributes="0"/>
-                  <Component id="jScrollPaneMedio1" pref="347" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneMedio1" pref="385" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -273,28 +266,27 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonAbrirComplejo">
+    <Component class="javax.swing.JButton" name="jButtonAbrirCerrar">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Color.red" type="code"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Abrir Complejo"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAbrirComplejoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAbrirCerrarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonCerrarComplejo">
+    <Component class="javax.swing.JButton" name="jButtonEstadistica">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cerrar Complejo"/>
+        <Property name="text" type="java.lang.String" value="Ver Estad&#xed;sticas"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCerrarComplejoActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonStop">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Stop"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStopActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEstadisticaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSalir">
@@ -339,6 +331,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Medio de Elevaci&#xf3;n 4"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonAgregarEsquiador">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Agregar Esquiador"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAgregarEsquiadorActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
