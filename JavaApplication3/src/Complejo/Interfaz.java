@@ -264,7 +264,7 @@ public class Interfaz extends javax.swing.JFrame {
             jButtonAbrirCerrar.setForeground(Color.BLACK);
             jButtonAbrirCerrar.setText("Cerrar Complejo");
             jButtonAgregarEsquiador.setEnabled(true);
-            this.complejo = new CaidaRapida(textoConfiteria, textoClases, textoEsquiadores, textoMedio1, textoMedio2, textoMedio3, textoMedio4);
+            this.complejo = new CaidaRapida(textoConfiteria, textoClases, textoEsquiadores, textoMedio1, textoMedio2, textoMedio3, textoMedio4, this);
             complejo.iniciaMedios(complejo);
             complejo.abrirComplejo();
             Random r = new Random();
@@ -280,14 +280,25 @@ public class Interfaz extends javax.swing.JFrame {
             }
         } else {
             jButtonAbrirCerrar.setBackground(Color.RED);
-            jButtonAbrirCerrar.setText("Abrir Complejo");
+            jButtonAbrirCerrar.setText("Complejo Cerrado");
             jButtonAbrirCerrar.setForeground(Color.WHITE);
             jButtonAbrirCerrar.setEnabled(false);
+            jButtonAgregarEsquiador.setEnabled(false);
             complejo.cerrarComplejo();
-            jButtonEstadistica.setEnabled(true);
         }
 
     }//GEN-LAST:event_jButtonAbrirCerrarActionPerformed
+    public void habilitarEstadística() {
+        jButtonEstadistica.setEnabled(true);
+    }
+
+    public void cerroComplejo() {
+        jButtonAbrirCerrar.setBackground(Color.RED);
+        jButtonAbrirCerrar.setText("Complejo Cerrado");
+        jButtonAbrirCerrar.setForeground(Color.WHITE);
+        jButtonAbrirCerrar.setEnabled(false);
+        jButtonAgregarEsquiador.setEnabled(false);
+    }
 
     private void jButtonEstadisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticaActionPerformed
         JOptionPane.showMessageDialog(rootPane, complejo.getEstadistica());

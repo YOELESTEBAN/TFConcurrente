@@ -105,11 +105,9 @@
                       <EmptySpace pref="52" max="32767" attributes="0"/>
                       <Component id="jButtonSalir" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jScrollPaneEsquiadores" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPaneConfiteria" alignment="0" pref="269" max="32767" attributes="0"/>
-                      <Component id="jScrollPaneClases" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPaneEsquiadores" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneConfiteria" alignment="0" pref="269" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneClases" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">

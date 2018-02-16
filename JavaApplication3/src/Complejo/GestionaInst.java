@@ -5,6 +5,8 @@
  */
 package Complejo;
 
+import java.util.ArrayList;
+import java.util.Queue;
 import javax.swing.JTextArea;
 
 /**
@@ -13,7 +15,7 @@ import javax.swing.JTextArea;
  */
 public class GestionaInst {
 
-    private int contAlumnosSky;//Contador de alumnos que quieren tomar clase de Sky
+    /*private int contAlumnosSky;//Contador de alumnos que quieren tomar clase de Sky
     private int contAlumnosSnow;//Contador de alumnos que quieren tomar clase de Snow
     private int cantInst;//Contador de instructores de Sky o Snow disponibles para dar clase
     private ListaEspera colaSky; //Lista de espera de Sky
@@ -25,10 +27,16 @@ public class GestionaInst {
     private boolean seCumplioTiempoSnow; //Boolean que marca si se cumplio Tiempo limite del equipo Snow
     private boolean capitanSky; //Boolean que marca si esta ocupado el lugar de capitanSky 
     private boolean capitanSnow; //Boolean que marca si esta ocupado el lugar de capitanSnow 
+     */
+    private ListaEspera colaSky;//Lista de espera de Sky
+    private ArrayList listaInst;//Lista que almacena los instructores disponibles
+    private int cantInst;//Contador de instructores de Sky o Snow disponibles para dar clase
+    private long horaLimiteSky; //Guarda hasta que hora pueden esperar para formar el grupo para la clase de Sky
+    private boolean seCumplioTiempoSky; //Boolean que marca si se cumplio Tiempo limite del equipo Sky
     private JTextArea salidaT;//Salida de texto en Interfaz
 
     public GestionaInst(JTextArea salidaT) {
-        contAlumnosSky = 0;
+        /*contAlumnosSky = 0;
         contAlumnosSnow = 0;
         cantInst = 5;
         horaLimiteSky = 0;
@@ -40,61 +48,38 @@ public class GestionaInst {
         colaSnowClase = new ListaEspera();
         colaSnowEntrada = new ListaEspera();
         capitanSky = false;
-        capitanSnow = false;
-        this.salidaT.append("Hay " + cantInst + " instructores disponibles.\n");
+        capitanSnow = false;*/
+        colaSky = new ListaEspera();
+        horaLimiteSky = 0;
+        seCumplioTiempoSky = false;
+        Instructor inst;
+        for (int aux = 0; aux < 5; aux++) {
+            inst = new Instructor(aux);
+            listaInst.add(aux);
+        }
+        this.salidaT.append("Hay " + listaInst.size() + " instructores disponibles.\n");
     }
 
     public synchronized void tomarClaseSky(Esquiador esq) {
         try {
-            System.out.println("**********" + esq.getNombre() + " quiere tomar una clase de sky.");
-            salidaT.append(esq.getNombre() + " quiere tomar una clase de sky.\n");
-            contAlumnosSky++; //Aumenta el contador de alumnos de Sky esperando
-            colaSky.ingresar(esq); //Se almacena en una lista
-            System.out.println("**********" + esq.getNombre() + " ingreso a lista.");
-            if (!capitanSky) { //Es el primer esquiador esperando
-                capitanSky = true; //toma el lugar de Capitan
-                seCumplioTiempoSky = false; //Como comienza el conteo, se pone en falso
-                horaLimiteSky = System.currentTimeMillis() + 15000; //Se asigna horario limite
-                salidaT.append(Thread.currentThread().toString() + " espera para tomar la clase de sky.\n");
-                while ((contAlumnosSky < 4 || cantInst < 1) && !seCumplioTiempoSky) { //Mientras no se junten los alumnos, el instructor y no se cumpla el tiempo límite, esperan
-                    wait(500); //Solo el primer esquiador que espera hasta 500 milisegundos
-                    if (horaLimiteSky < System.currentTimeMillis()) { //Cuando se despierta comprueba si se cumplió el tiempo límite
-                        seCumplioTiempoSky = true; //Si se cumplió el tiempo se cambia el valor de la variable booleana seCumplioTiempoSky
+            if (cantInst > 0) {//Si hay instructor entra
+                if (colaSky.getTamaño() == 0) {//Es el primer esquiador de la clase
+                    cantInst--; //Reserva 1 instructor para que de la clase
+                    horaLimiteSky = System.currentTimeMillis() + 15000; //Se asigna horario limite
+                    seCumplioTiempoSky = false;
+                    colaSky.ingresar(esq);//Se almacena el esquiador en la cola para tomar la clase
+                    esq.wait();
+                    while (colaSky.getTamaño() != 4 && !seCumplioTiempoSky) { //Mientras no se arme el grupo y no se cumpla el tiempo límite, esperan
+                        wait(500); //Solo el primer esquiador se despierta cada 500 milisegundos
+                        if (horaLimiteSky < System.currentTimeMillis()) { //Cuando se despierta comprueba si se cumplió el tiempo límite
+                            seCumplioTiempoSky = true; //Si se cumplió el tiempo se cambia el valor de la variable booleana seCumplioTiempoSnow
+                        }
                     }
+                } else {//Ya hay algún esquiador esperando
+
                 }
-                if (seCumplioTiempoSky) { //Si salió del bucle porque se cumplió el tiempo
-                    salidaT.append("Se cumplió el tiempo límite de espera para tomar la clase de sky.\n");
-                    contAlumnosSky--; //Se retira y resta 1 a la cantidad de alumnos
-                    while (colaSky.getTamaño() > 0) {//Si se cumplio el tiempo, el primer esquiador despierta a todo el grupo
-                        (colaSky.retirar()).notify();
-                    }
-                    capitanSky = false;//Deja de ser el capitan para que otro lo tome
-                } else { //Se completó el grupo
-                    salidaT.append(Thread.currentThread().toString() + " va a tomar la clase de sky.\n");
-                    cantInst--; //El primer esquiador resta 1 instructor a la cantidad de instructores disponibles
-                    salidaT.append("Hay " + cantInst + " instructores disponibles.\n");
-                    for (int aux = 1; aux < 4; aux++) {//El primer esquiador despierta a todo el grupo para tomar la clase
-                        (colaSky.retirar()).notify();
-                    }
-                    capitanSky = false;//Deja de ser el capitan para que otro lo tome
-                    esq.wait(2000); //Toma la clase
-                    salidaT.append(Thread.currentThread().toString() + " termino de tomar la clase de sky.\n");
-                    cantInst++; //Devuelve el instructor para que este disponible
-                    salidaT.append("Hay " + cantInst + " instructores disponibles.\n");
-                    contAlumnosSky--; //Se retira y resta 1 a la cantidad de alumnos
-                }
-            } else { //Si no es el primer esquiador
-                salidaT.append(Thread.currentThread().toString() + " espera para tomar la clase de sky.\n");
-                esq.wait();
-                if (!seCumplioTiempoSky) { //Se armo grupo
-                    salidaT.append(Thread.currentThread().toString() + " va a tomar la clase de sky.\n");
-                    esq.wait(2000); //Toma la clase
-                    salidaT.append(Thread.currentThread().toString() + " termino de tomar la clase de sky.\n");
-                    contAlumnosSky--; //Se retira y resta 1 a la cantidad de alumnos
-                } else {//Si se cumplio el tiempo
-                    contAlumnosSky--; //Se retira y resta 1 a la cantidad de alumnos
-                    salidaT.append(Thread.currentThread().toString() + " se va porque no se pudo armar el grupo de sky.\n");
-                }
+            } else {//Si no hay instructor disponible, se va
+                salidaT.append(esq.getNombre() + " No hay instructor disponible, se va.\n");
             }
         } catch (InterruptedException ex) {
             System.out.println("ERROR SEVERO en tomarClaseSky " + Thread.currentThread().toString());
@@ -176,7 +161,9 @@ public class GestionaInst {
             } else { //Si no es el primer esquiador
                 colaSnowClase.ingresar(esq); //Se almacena en una lista
                 salidaT.append(Thread.currentThread().toString() + " espera para tomar la clase de snow.\n");
-                synchronized (esq){ esq.wait();} //ver blockes synchronized o clase locks
+                synchronized (esq) {
+                    esq.wait();
+                } //ver blockes synchronized o clase locks
                 if (!seCumplioTiempoSnow) { //Se armo grupo
                     salidaT.append(Thread.currentThread().toString() + " toma la clase de snow.\n");
                     wait(); //Toma la clase
