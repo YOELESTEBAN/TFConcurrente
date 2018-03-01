@@ -17,16 +17,18 @@ public class Esquiador extends Thread {
     private CaidaRapida complejo;
     private String nombre; //Nombre del Esquiador
     private Confiteria conf; //Confitería del complejo
-    private GestionaInst monInst; //Monitor de instructores
+    private GestionaClase monInst; //Monitor de instructores
     private GestionaMedio monMedio; //Monitor de medios de elevación
     private int tipoMedio; //Indica tipo de medio (1,2,3 o 4)
     private int menu; //Indica menu que se va a servir en la confitería
     private boolean postre; //Indica si compra postre en la confitería
     private boolean claseSky; //Indica si toma clase de Sky (en false toma clase de Snow)
+    private int turnoSky; //Indica el turno que se le asigna para la clase de Sky
+    private boolean enClase; //Indica si esta tomando una clase
     private Random r; //Random que se usa para variar la clase que toma (sky o snow)
     private JTextArea salidaT; //Salida de texto en Interfaz
 
-    public Esquiador(String nombre, Confiteria conf, GestionaInst monInst, GestionaMedio m, JTextArea salida, CaidaRapida comp) {
+    public Esquiador(String nombre, Confiteria conf, GestionaClase monInst, GestionaMedio m, JTextArea salida, CaidaRapida comp) {
         this.complejo = comp;
         this.nombre = nombre;
         this.tipoMedio = 1;//Este valor no es relevante porque luego se llama al metodo cambiaRandom()
@@ -36,6 +38,8 @@ public class Esquiador extends Thread {
         this.monInst = monInst;
         this.claseSky = true;//Este valor no es relevante porque luego se llama al metodo cambiaRandom()
         this.monMedio = m;
+        this.turnoSky = 0;
+        this.enClase = false;
         this.salidaT = salida;
     }
 
@@ -49,6 +53,14 @@ public class Esquiador extends Thread {
 
     public void setPostre(boolean i) {
         this.postre = i;
+    }
+
+    public void setEnClase(Boolean b) {
+        this.enClase = b;
+    }
+
+    public boolean getEnClase() {
+        return this.enClase;
     }
 
     public int getTipoDeMedio() {
@@ -105,58 +117,76 @@ public class Esquiador extends Thread {
         }
     }
 
+    public void setTurnoSky(int turno) {
+        this.turnoSky = turno;
+    }
+
+    public int getTurnoSky() {
+        return this.turnoSky;
+    }
+
     @Override
     public void run() {
         try {
             int aux;
             salidaT.append(this.getNombre() + " entra al complejo.\n");
             while (complejo.estaAbierto()) {
-                this.cambiaRandom();//Este método cambia el menu, postre, el medio a utilizar, y la clase que puede tomar
-                System.out.println(this.getNombre() + " empieza.");
-                aux = (int) (Math.random() * 3) + 1;//Genera un random entre 1 y 3 para ir cambiando la acción del esquiador
-                System.out.println(this.nombre + " elije opcion: " + aux);
-                switch (3) {
-                    case 1:
-                        System.out.println(this.getNombre() + " va a la CONFITERÍA.");
-                        if (conf.comprarMenu(this)) {//Si logra entrar a la confitería y compra menu
-                            conf.retiraMenu(this);//Como logró entrar a la confitería y compro el menu, lo retira
-                            if (this.getPostre()) {//Si el esquiador compro postre
-                                conf.retiraPostre(this);//Retira el postre
-                            }
-                            System.out.println(this.getNombre() + " come.");
-                            conf.come(this);//Come en la confitería
-                            conf.saleConfiteria(this);//Al terminar de comer sale de la confitería
+            this.cambiaRandom();//Este método cambia el menu, postre, el medio a utilizar, y la clase que puede tomar
+            System.out.println(this.getNombre() + " empieza.");
+            aux = (int) (Math.random() * 3) + 1;//Genera un random entre 1 y 3 para ir cambiando la acción del esquiador
+            System.out.println(this.nombre + " elije opcion: " + aux);
+            switch (aux) {
+                case 1:
+                    System.out.println(this.getNombre() + " va a la CONFITERÍA.");
+                    if (conf.comprarMenu(this)) {//Si logra entrar a la confitería y compra menu
+                        conf.retiraMenu(this);//Como logró entrar a la confitería y compro el menu, lo retira
+                        if (this.getPostre()) {//Si el esquiador compro postre
+                            conf.retiraPostre(this);//Retira el postre
                         }
-                        System.out.println(this.getNombre() + " se va de confitería.");
-                        break;
+                        System.out.println(this.getNombre() + " come.");
+                        conf.come(this);//Come en la confitería
+                        conf.saleConfiteria(this);//Al terminar de comer sale de la confitería
+                    }
+                    System.out.println(this.getNombre() + " se va de confitería.");
+                    break;
 
-                    case 2:
-                        System.out.println(this.getNombre() + " va a TOMAR UNA CLASE.");
-                        if (false) {
-                            monInst.tomarClaseSky(this);
-                        } else {
-                            monInst.tomarClaseSnow(this);
-                        }
-                        break;
+                case 2:
+                    if (claseSky) {
+                        System.out.println(this.getNombre() + " va a tomarClaseSky en RUN Esquiador.");
+                        monInst.tomarClaseSky(this);
+                    } else {
+                        System.out.println(this.getNombre() + " va a tomarClaseSnow en RUN Esquiador.");
+                        monInst.tomarClaseSnow(this);
+                    }
+                    break;
 
-                    case 3:
-                        System.out.println(this.getNombre() + " va a SUBIR A UN MEDIO.");
-                        monMedio.entrarMedio(tipoMedio);
-                         switch (tipoMedio){
-                             case 1: this.esperar(30);break;//Simula cuanto demora en subir y bajar del medio 1
-                             case 2: this.esperar(25);break;//Simula cuanto demora en subir y bajar del medio 2
-                             case 3: this.esperar(20);break;//Simula cuanto demora en subir y bajar del medio 3
-                             case 4: this.esperar(15);break;//Simula cuanto demora en subir y bajar del medio 4
-                             default: 
-                                 System.out.println(this.getNombre() + " eligió un medio inválido");
-                                salidaT.append(this.getNombre() + " eligió un medio inválido.\n");
-                        }
-                        break;
-                    default:
-                        System.out.println(this.getNombre() + " eligió hacer una acción inválida");
-                        salidaT.append(this.getNombre() + " eligió hacer una acción inválida.\n");
-                }
-                this.esperar(5);//Simula el tiempo que transcurre entre que termina una actividad y comienza otra
+                case 3:
+                    System.out.println(this.getNombre() + " va a SUBIR A UN MEDIO.");
+                    monMedio.entrarMedio(this, tipoMedio);
+                    switch (tipoMedio) {
+                        case 1:
+                            this.esperar(10);
+                            break;//Simula cuanto demora en subir y bajar del medio 1
+                        case 2:
+                            this.esperar(8);
+                            break;//Simula cuanto demora en subir y bajar del medio 2
+                        case 3:
+                            this.esperar(6);
+                            break;//Simula cuanto demora en subir y bajar del medio 3
+                        case 4:
+                            this.esperar(4);
+                            break;//Simula cuanto demora en subir y bajar del medio 4
+                        default:
+                            System.out.println(this.getNombre() + " eligió un medio inválido");
+                            salidaT.append(this.getNombre() + " eligió un medio inválido.\n");
+                    }
+                    monMedio.termino(this, tipoMedio);
+                    break;
+                default:
+                    System.out.println(this.getNombre() + " eligió hacer una acción inválida");
+                    salidaT.append(this.getNombre() + " eligió hacer una acción inválida.\n");
+            }
+            this.esperar(5);//Simula el tiempo que transcurre entre que termina una actividad y comienza otra
             }
             salidaT.append(this.getNombre() + " sale del complejo.\n");
             System.out.println(this.getNombre() + " se va.");

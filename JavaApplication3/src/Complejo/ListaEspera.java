@@ -11,28 +11,31 @@ import java.util.ArrayList;
  *
  * @author Latitude
  */
-public class ListaEspera {
+public class ListaEspera { //Clase auxiliar que funciona como Cola
+
     private ArrayList arreglo;
     private int posIni;
     private int posFin;
-    
-    public ListaEspera(){
-        arreglo= new ArrayList();
-        posIni=0;
-        posFin=0;
+
+    public ListaEspera() {
+        arreglo = new ArrayList();
+        posIni = 0;
+        posFin = 0;
     }
-    
-    public void ingresar(Esquiador e){
-        arreglo.add(posFin,e);
+
+    public void ingresar(Object e) {
+        arreglo.add(posFin, e);
         posFin++;
     }
-    public Esquiador retirar(){
-        Esquiador aux= (Esquiador) arreglo.get(posIni);
+
+    public Object retirar() {
+        Object aux = arreglo.get(posIni);
         posIni++;
         return aux;
     }
-    public int getTamaño(){
-        return (posFin-posIni);
+
+    public int getTamaño() {
+        return (posFin - posIni);
     }
-    
+
 }

@@ -11,7 +11,7 @@ package Complejo;
  */
 public class Molinete {
 
-    private int contador;
+    private int contador; //Variable que lleva el conteo
     private int id;
 
     public Molinete(int id) {
@@ -28,7 +28,7 @@ public class Molinete {
     }
 
     public synchronized void usarMolinete() {
-        contador++;
+        contador++; //Aumenta el contador
     }
 
 }

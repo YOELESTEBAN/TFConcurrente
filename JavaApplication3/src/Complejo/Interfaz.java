@@ -264,16 +264,15 @@ public class Interfaz extends javax.swing.JFrame {
             jButtonAbrirCerrar.setForeground(Color.BLACK);
             jButtonAbrirCerrar.setText("Cerrar Complejo");
             jButtonAgregarEsquiador.setEnabled(true);
-            this.complejo = new CaidaRapida(textoConfiteria, textoClases, textoEsquiadores, textoMedio1, textoMedio2, textoMedio3, textoMedio4, this);
-            complejo.iniciaMedios(complejo);
-            complejo.abrirComplejo();
+            this.complejo = new CaidaRapida(textoConfiteria, textoEsquiadores, textoMedio1, textoMedio2, textoMedio3, textoMedio4, this);
+            complejo.abrirComplejo(textoClases, complejo);
             Random r = new Random();
             int aux;
             try {
-                for (aux = 0; aux < 50; aux++) {
+                for (aux = 0; aux < 150; aux++) {
                     String nombre = "E" + aux;
                     complejo.entraEsquiador(complejo, nombre);
-                    Thread.sleep(r.nextInt(100));
+                    Thread.sleep(r.nextInt(50));
                 }
             } catch (InterruptedException ex) {
                 System.err.println("Error en Boton Abrir Complejo.");
