@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author Latitude
  */
-public class GestionaClase {
+public class GestionaClase { //Monitor de las clases de Sky y Snow
 
     private CaidaRapida complejo;//Clase principal
     private int contAlumnosSky;//Contador de alumnos que quieren tomar clase de Sky
@@ -107,10 +107,10 @@ public class GestionaClase {
                     } else { //Si no es el 4to quiere decir que ya hay un grupo formado 
                         if (cantInst > 0) { //Si hay instructores disponibles espera
                             salidaT.append(esq.getNombre() + " espera la clase de Sky.\n");
-                            long j = horaLimiteSky - System.currentTimeMillis();
+                            //long j = horaLimiteSky - System.currentTimeMillis();
                             while (!esq.getEnClase() && !seCumplioTiempoSky) {
                                 System.out.println(esq.getNombre() + " espera por entrar a clase o se cumpla tiempo");
-                                this.wait(j);//A lo sumo espera j milisegundos
+                                this.wait(1500);//A lo sumo espera 1500 milisegundos
                                 if (esq.getEnClase()) {
                                     System.out.println(esq.getNombre() + " va a tomar la clase");
                                     banderaSky = true;
@@ -163,10 +163,10 @@ public class GestionaClase {
 
                     } else {
                         salidaT.append(esq.getNombre() + " espera la clase de Sky.\n");
-                        long k = horaLimiteSky - System.currentTimeMillis();
+                        //long k = horaLimiteSky - System.currentTimeMillis();
                         while (!esq.getEnClase() && !seCumplioTiempoSky) {
                             System.out.println(esq.getNombre() + " espera por entrar a clase o se cumpla tiempo");
-                            this.wait(k);//A lo sumo espera k milisegundos
+                            this.wait(1500);//A lo sumo espera 1500 milisegundos
                             if (esq.getEnClase()) {
                                 System.out.println(esq.getNombre() + " va a tomar la clase");
                                 banderaSky = true;
@@ -322,10 +322,10 @@ public class GestionaClase {
                     } else { //Si no es el 4to quiere decir que ya hay un grupo formado 
                         if (cantInst > 0) { //Si hay instructores disponibles espera
                             salidaT.append(esq.getNombre() + " espera la clase de Snow.\n");
-                            long j = horaLimiteSnow - System.currentTimeMillis();
+                            //long j = horaLimiteSnow - System.currentTimeMillis();
                             while (!esq.getEnClase() && !seCumplioTiempoSnow) {
                                 System.out.println(esq.getNombre() + " espera por entrar a clase o se cumpla tiempo");
-                                this.wait(j);//A lo sumo espera j milisegundos
+                                this.wait(1500);//A lo sumo espera 1500 milisegundos
                                 if (esq.getEnClase()) {
                                     System.out.println(esq.getNombre() + " va a tomar la clase");
                                     banderaSnow = true;
@@ -378,10 +378,10 @@ public class GestionaClase {
 
                     } else {
                         salidaT.append(esq.getNombre() + " espera la clase de Snow.\n");
-                        long k = horaLimiteSnow - System.currentTimeMillis();
+                        //long k = horaLimiteSnow - System.currentTimeMillis();
                         while (!esq.getEnClase() && !seCumplioTiempoSnow) {
                             System.out.println(esq.getNombre() + " espera por entrar a clase o se cumpla tiempo");
-                            this.wait(k);//A lo sumo espera k milisegundos
+                            this.wait(1500);//A lo sumo espera 1500 milisegundos
                             if (esq.getEnClase()) {
                                 System.out.println(esq.getNombre() + " va a tomar la clase");
                                 banderaSnow = true;

@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author Yoni
  */
-public class Esquiador extends Thread {
+public class Esquiador extends Thread { //Hilo esquiador
 
     private CaidaRapida complejo;
     private String nombre; //Nombre del Esquiador

@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author Latitude
  */
-public class GestionaMedio {
+public class GestionaMedio { //Monitor de los medios
 
     private ArrayList medios;//Arreglo que almacena los medios
     private JTextArea textoM1;//Salida de texto en Interfaz para medio1
@@ -59,7 +59,7 @@ public class GestionaMedio {
         }
     }
 
-    public void startMedios() { //Inicia los medios
+    public synchronized void startMedios() { //Inicia los medios
         int i;
         Medio m;
         for (i = 1; i < 5; i++) {
@@ -68,7 +68,7 @@ public class GestionaMedio {
         }
     }
 
-    public String getEstadistica() { //Saca la cuenta de cuanto se uso cada medio
+    public synchronized String getEstadistica() { //Saca la cuenta de cuanto se uso cada medio
         String est = "Cantidad de veces que se uso cada medio:\n";
         int aux, cant;
         Medio m;
@@ -80,7 +80,7 @@ public class GestionaMedio {
         return est;
     }
 
-    public void cerrarMedios() { //Cierra los medios
+    public synchronized void cerrarMedios() { //Cierra los medios
         int i;
         Medio m;
         for (i = 1; i < 5; i++) {
